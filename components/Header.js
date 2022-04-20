@@ -18,7 +18,7 @@ export default function Header({ darkTheme, toggleDarkTheme }) {
     const rand = getRandom()
 
     return (
-        <header className="w-100 py-8 flex flex-row justify-center fixed w-full border-b border-gray-100 bg-white dark:bg-gray-900 dark:border-gray-800">
+        <header className="w-100 py-8 flex flex-row justify-center fixed w-full border-b border-gray-100 z-30 bg-white dark:bg-gray-900 dark:border-gray-800">
             <ul className="flex flex-row justify-end px-2 container">
                 <HeaderLink text="Home" href="/" />
                 <HeaderLink text="Tech Blog" href="/blog" />

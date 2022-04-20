@@ -13,7 +13,7 @@ function MyApp({ Component, pageProps }) {
     const [darkTheme, setDarkTheme] = useState(false);
 
     return (
-        <main className={darkTheme ? 'dark' : 'light'}>
+        <main className={`transition-colors duration-1000 delay-150 ${darkTheme ? 'dark' : 'light'}`}>
             <div className='bg-white min-h-screen dark:bg-gray-900'>
                 <Header
                     darkTheme={darkTheme}

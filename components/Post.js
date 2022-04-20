@@ -18,7 +18,7 @@ export default function Post({ post, image }) {
     return (
         <div className="w-full m-auto border-b border-gray-100 flex flex-row items-center justify-between py-4 px-2 dark:border-gray-800">
             <div className="flex flex-row items-center">
-                <div className="mr-8">
+                <div className="mr-8 hidden md:block">
                     <h5 className="font-main text-sm text-gray-400">Last Updated</h5>
                     <h4 className="font-main font-bold text-md dark:text-white">{formatDate}</h4>
                 </div>
