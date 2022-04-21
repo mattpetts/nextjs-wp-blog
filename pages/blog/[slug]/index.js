@@ -50,21 +50,28 @@ export default function index({ post }) {
 
 }
 
-export const getServerSideProps = async (context) => {
 
-    let post = {};
+export const getStaticPaths = async () => {
 
-    await fetch(`http://localhost:6660/wp-json/wp/v2/posts?slug=${context.params.slug}&_embed`)
-    .then(res => res.json())
-    .then(
-        (results) => {
-            post = results[0]
-        }
-    )
+    const res = await fetch('http://localhost:6660/wp-json/wp/v2/posts')
+    const posts = await res.json()
+
+    // generate the paths
+    const paths = posts.map((post) => ({
+        params: { slug: post.slug },
+    }))
 
     return {
-        props: {
-            post
-        }
-    }
+        paths,
+        fallback: false
+    };
+}
+
+export async function getStaticProps ({ params }) {
+
+    const res = await fetch(`http://localhost:6660/wp-json/wp/v2/posts?slug=${params.slug}&_embed`)
+    const result = await res.json()
+    const post = result[0];
+
+    return { props: { post } }
 }
