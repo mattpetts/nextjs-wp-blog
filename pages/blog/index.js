@@ -1,9 +1,28 @@
+import { useState, useEffect } from 'react'
 import Head from 'next/head'
-import { getPosts } from '../../utilities/getPosts'
 import Post from '../../components/Post'
 
 
 export default function Home({ posts }) {
+
+    const [searchTerm, setSearchTerm] = useState('');
+    const [searchPosts, setSearchPosts] = useState('');
+
+    const defaultPosts = posts.map((post) => (
+        <Post key={post.id} post={post} image={post._embedded['wp:featuredmedia'][0].source_url} />
+    ));
+
+    useEffect(() => {
+        fetch(`http://localhost:6660/wp-json/wp/v2/posts?_embed&search=${searchTerm}`)
+        .then(res => res.json())
+        .then(
+            (results) => {
+                setSearchPosts(results.map((post) => (
+                    <Post key={post.id} post={post} image={post._embedded['wp:featuredmedia'][0].source_url} />
+                )));
+            }
+        )
+    }, [searchTerm])
 
     return (
         <div className="pt-20 container min-h-screen m-auto">
@@ -18,18 +37,26 @@ export default function Home({ posts }) {
                         name="search" 
                         placeholder="Search Blog" 
                         className="w-full p-4 border rounded font-main text-lg outline-none dark:bg-gray-900 dark:border-gray-800 dark:text-white"
+                        onChange={(e) => setSearchTerm(e.target.value)}
                     />
                 </form>
-                {posts.map((post) => (
-                    <Post key={post.id} post={post} image={post._embedded['wp:featuredmedia'][0].source_url} />
-                ))}
+                {searchTerm ? searchPosts.length > 0 ? searchPosts : <h3 className='font-main text-xl text-left my-6 dark:text-white'>No Results found for '{searchTerm}'</h3> : defaultPosts}
             </div>
         </div>
     )
 }
 
 export async function getStaticProps () {
-    const posts = await getPosts();
+
+    let posts = {};
+
+    await fetch('http://localhost:6660/wp-json/wp/v2/posts?_embed')
+    .then(res => res.json())
+    .then(
+        (results) => {
+            posts = results
+        }
+    )
 
     return {
         props: {

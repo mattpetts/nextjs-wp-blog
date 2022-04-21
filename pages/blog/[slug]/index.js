@@ -1,7 +1,10 @@
 import React from 'react'
 import Head from 'next/head'
+import Link from 'next/link'
 import { getSingle } from '../../../utilities/getSingle'
 import { getRandom } from '../../../utilities/getRand'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 
 export default function index({ post }) {
 
@@ -28,6 +31,7 @@ export default function index({ post }) {
                         className="rounded-md block mx-auto mt-6 max-w-5xl w-full" 
                     />
                 }
+                <h5 className='mt-5 font-main text-md dark:text-white cursor-pointer'><Link href="/blog"><span className='font-bold'><FontAwesomeIcon icon={ faChevronLeft } /> Tech Blog</span></Link></h5>
                 <h1 className="inline-block text-left font-main font-bold text-5xl text-left my-6 relative blog-hover text-white">
                     <span className='z-10 relative'>{post.title.rendered}</span>
                     <span className={`hover-underline absolute left-0 -bottom-0 w-full h-full transition-all bg-theme-${rand}`}></span>
