@@ -1,8 +1,7 @@
-import React from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
-import { getSingle } from '../../../utilities/getSingle'
-import { getRandom } from '../../../utilities/getRand'
+
+import { getRandom } from '../../../utilities/helperFunctions'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 
@@ -53,7 +52,15 @@ export default function index({ post }) {
 
 export const getServerSideProps = async (context) => {
 
-    const post = await getSingle(context.params.slug);
+    let post = {};
+
+    await fetch(`http://localhost:6660/wp-json/wp/v2/posts?slug=${context.params.slug}&_embed`)
+    .then(res => res.json())
+    .then(
+        (results) => {
+            post = results[0]
+        }
+    )
 
     return {
         props: {

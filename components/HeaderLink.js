@@ -1,6 +1,5 @@
-import React from 'react'
 import Link from 'next/link'
-import { getRandom } from '../utilities/getRand'
+import { getRandom } from '../utilities/helperFunctions'
 
 export default function HeaderLink({ text, href }) {
 
