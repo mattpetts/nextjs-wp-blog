@@ -3,14 +3,10 @@ import Head from 'next/head'
 import Post from '../../components/Post'
 
 
-export default function Home({ posts }) {
+export default function Home() {
 
     const [searchTerm, setSearchTerm] = useState('');
     const [searchPosts, setSearchPosts] = useState('');
-
-    const defaultPosts = posts.map((post) => (
-        <Post key={post.id} post={post} image={post._embedded['wp:featuredmedia'][0].source_url} />
-    ));
 
     useEffect(() => {
         fetch(`http://localhost:6660/wp-json/wp/v2/posts?_embed&search=${searchTerm}`)
@@ -40,27 +36,8 @@ export default function Home({ posts }) {
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />
                 </form>
-                {searchTerm ? searchPosts.length > 0 ? searchPosts : <h3 className='font-main text-xl text-left my-6 dark:text-white'>No Results found for '{searchTerm}'</h3> : defaultPosts}
+                {searchPosts.length > 0 ? searchPosts : <h3 className='font-main text-xl text-left my-6 dark:text-white'>No Results found for '{searchTerm}'</h3>}
             </div>
         </div>
     )
-}
-
-export async function getStaticProps () {
-
-    let posts = {};
-
-    await fetch('http://localhost:6660/wp-json/wp/v2/posts?_embed')
-    .then(res => res.json())
-    .then(
-        (results) => {
-            posts = results
-        }
-    )
-
-    return {
-        props: {
-            posts: posts
-        }
-    }
 }
