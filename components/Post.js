@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { getRandom } from '../utilities/getRand'
+import { getRandom } from '../utilities/helperFunctions'
 
 
 export default function Post({ post, image }) {

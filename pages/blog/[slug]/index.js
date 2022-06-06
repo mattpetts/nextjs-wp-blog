@@ -1,8 +1,7 @@
-import React from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
-import { getSingle } from '../../../utilities/getSingle'
-import { getRandom } from '../../../utilities/getRand'
+
+import { getRandom } from '../../../utilities/helperFunctions'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 
@@ -51,13 +50,28 @@ export default function index({ post }) {
 
 }
 
-export const getServerSideProps = async (context) => {
 
-    const post = await getSingle(context.params.slug);
+export const getStaticPaths = async () => {
+
+    const res = await fetch('http://localhost:6660/wp-json/wp/v2/posts')
+    const posts = await res.json()
+
+    // generate the paths
+    const paths = posts.map((post) => ({
+        params: { slug: post.slug },
+    }))
 
     return {
-        props: {
-            post
-        }
-    }
+        paths,
+        fallback: false
+    };
+}
+
+export async function getStaticProps ({ params }) {
+
+    const res = await fetch(`http://localhost:6660/wp-json/wp/v2/posts?slug=${params.slug}&_embed`)
+    const result = await res.json()
+    const post = result[0];
+
+    return { props: { post } }
 }
