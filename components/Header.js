@@ -1,7 +1,7 @@
 import HeaderLink from './HeaderLink'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons'
-import { getRandom } from '../utilities/helperFunctions'
+import { getRandom } from '../lib/utils'
 
 export default function Header({ darkTheme, toggleDarkTheme }) {
 

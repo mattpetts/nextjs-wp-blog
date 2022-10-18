@@ -1,24 +1,23 @@
 import { useState, useEffect } from 'react'
 import Head from 'next/head'
 import Post from '../../components/Post'
+import { getAllPostsFromServer } from '../../lib/utils';
 
 
 export default function Home() {
 
-    const [searchTerm, setSearchTerm] = useState('');
-    const [searchPosts, setSearchPosts] = useState('');
-
+    const [posts, setPosts] = useState([]);
     useEffect(() => {
-        fetch(`http://localhost:6660/wp-json/wp/v2/posts?_embed&search=${searchTerm}`)
-        .then(res => res.json())
-        .then(
-            (results) => {
-                setSearchPosts(results.map((post) => (
-                    <Post key={post.id} post={post} image={post._embedded['wp:featuredmedia'][0].source_url} />
-                )));
+        const fetchPosts = async () => {
+            let mounted = true;
+            if (mounted) {
+                const postsFromServer = await getAllPostsFromServer();
+                setPosts(postsFromServer);
             }
-        )
-    }, [searchTerm])
+            return () => (mounted = false);
+        }
+        fetchPosts();
+    }, []);
 
     return (
         <div className="pt-20 container min-h-screen m-auto">
@@ -33,10 +32,15 @@ export default function Home() {
                         name="search" 
                         placeholder="Search Blog" 
                         className="w-full p-4 border rounded font-main text-lg outline-none dark:bg-gray-900 dark:border-gray-800 dark:text-white"
-                        onChange={(e) => setSearchTerm(e.target.value)}
                     />
                 </form>
-                {searchPosts.length > 0 ? searchPosts : <h3 className='font-main text-xl text-left my-6 dark:text-white'>No Results found for '{searchTerm}'</h3>}
+                {posts && (
+                    <>
+                        {posts.map((post) => (
+                            <Post key={post.id} post={post} />
+                        ))}
+                    </>
+                )}
             </div>
         </div>
     )

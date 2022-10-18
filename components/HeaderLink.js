@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { getRandom } from '../utilities/helperFunctions'
+import { getRandom } from '../lib/utils'
 
 export default function HeaderLink({ text, href }) {
 
