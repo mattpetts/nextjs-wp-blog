@@ -12,10 +12,10 @@ export default function Home() {
         <>
             <div className="flex flex-1 flex-col justify-center items-center min-h-screen">
                 <Head>
-                    <title>Matt's Website</title>
+                    <title>Matt&apos;s Website</title>
 
                     <link rel="preconnect" href="https://fonts.googleapis.com" />
-                    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+                    <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin />
                     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
                 </Head>
 
@@ -32,17 +32,17 @@ export default function Home() {
             <div className='fixed bottom-3.5 w-full pb-5'>
                 <ul className='flex flex-row justify-center align-center flex-1'>
                     <li className='mx-2 text-2xl cursor-pointer'>
-                        <a href="https://github.com/mattpetts" target="_blank">
+                        <a href="https://github.com/mattpetts" target="_blank" rel="noreferrer">
                             <FontAwesomeIcon icon={ faGithub } className="dark:text-white" />
                         </a>
                     </li>
                     <li className='mx-2 text-2xl cursor-pointer'>
-                        <a href="https://www.linkedin.com/in/matt-petts-51230968/" target="_blank">
+                        <a href="https://www.linkedin.com/in/matt-petts-51230968/" target="_blank" rel="noreferrer">
                             <FontAwesomeIcon icon={ faLinkedin } className="dark:text-white" />
                         </a>
                     </li>
                     <li className='mx-2 text-2xl cursor-pointer'>
-                        <a href="mailto:mattpetts23@gmail.com" target="_blank">
+                        <a href="mailto:mattpetts23@gmail.com" target="_blank" rel="noreferrer">
                             <FontAwesomeIcon icon={ faEnvelope } className="dark:text-white" />
                         </a>
                     </li>
