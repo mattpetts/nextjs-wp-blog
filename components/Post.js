@@ -19,7 +19,7 @@ export default function Post({ post }) {
         }
     }, []);
 
-    const postDate = formatdate(post.date)
+    const postDate = formatdate(post.modified)
     const rand = getRandom();
 
     return (

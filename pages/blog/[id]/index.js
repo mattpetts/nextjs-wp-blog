@@ -65,6 +65,6 @@ export async function getStaticProps({ params }) {
     const featuredImg = await getFeaturedImage(post.featured_media);
     const author = await getAuthor(post.author);
     return {
-      props: { title: post.title.rendered, content: post.content.rendered, featuredImg, author, date: post.date },
+      props: { title: post.title.rendered, content: post.content.rendered, featuredImg, author, date: post.modified },
     };
 }
