@@ -46,7 +46,7 @@ export default function Home() {
                         onChange={(e) => updateSearchTerm(e.target.value)}
                     />
                 </form>
-                <PostList posts={filteredPosts.length > 0 ? filteredPosts : posts} />
+                <PostList posts={searchTerm ? filteredPosts : posts} />
             </div>
         </div>
     )
