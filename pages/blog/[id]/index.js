@@ -7,21 +7,33 @@ import { POSTS_API_URL } from '../../../lib/constants';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
+import { useEffect, useState } from 'react';
 
-export default function index({ title, featuredImg, author, content, date }) {
+export default function index({ post, title }) {
 
-    const postDate = formatdate(date);
+    const postDate = formatdate(post.modified);
     const rand = getRandom();
+
+    const [postData, setPostData] = useState({});
+
+    useEffect(() => {
+        const getPostData = async () => {
+            const image = await getFeaturedImage(post.featured_media);
+            const author = await getAuthor(post.author);
+            setPostData({image, author})
+        }
+        getPostData();
+    }, [])
 
     return (
         <div className="pt-20 container pb-10 m-auto">
             <Head>
-                <title>Test</title>
+                <title>{title}</title>
             </Head>
             <div className="w-10/12 py-8 m-auto sm:w-8/12">
-                {featuredImg &&
+                {postData &&
                     <img 
-                        src={featuredImg} 
+                        src={postData.image} 
                         alt={title} 
                         className="rounded-md block mx-auto mt-6 max-w-5xl w-full" 
                     />
@@ -33,11 +45,11 @@ export default function index({ title, featuredImg, author, content, date }) {
                 </h1>  
                 <div className="flex flex-row align-center border-t border-b py-4 mb-5 dark:border-gray-800">
                     <h4 className="font-main font-bold text-md mr-5 dark:text-white w-6/12 sm:w-max">Last Updated: {postDate}</h4>
-                    <h4 className="font-main font-bold text-md dark:text-white w-6/12 sm:w-max">By: {author}</h4>
+                    <h4 className="font-main font-bold text-md dark:text-white w-6/12 sm:w-max">By: {postData.author}</h4>
                 </div>
                 <div
                     className="blog-content-block dark:text-white"
-                    dangerouslySetInnerHTML={{ __html: content }}
+                    dangerouslySetInnerHTML={{ __html: post.content.rendered }}
                 >
                 </div>
             </div>
@@ -50,10 +62,12 @@ export async function getStaticPaths() {
   
     const res = await axios.get(POSTS_API_URL);
     const posts = res.data;
+
     // Get the paths we want to pre-render based on posts
     const paths = posts.map((post) => ({
-      params: { id: post.id.toString() },
+        params: { id: post.id.toString() },
     }));
+
     // We'll pre-render only these paths at build time.
     return { paths, fallback: false };
 }
@@ -62,9 +76,7 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
     const res = await axios.get(`${POSTS_API_URL}/${params.id}`);
     const post = await res.data;
-    const featuredImg = await getFeaturedImage(post.featured_media);
-    const author = await getAuthor(post.author);
     return {
-      props: { title: post.title.rendered, content: post.content.rendered, featuredImg, author, date: post.modified },
+        props: { post, title: post.title.rendered },
     };
 }
