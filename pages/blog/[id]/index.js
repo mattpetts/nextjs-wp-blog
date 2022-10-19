@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import { useEffect, useState } from 'react';
 
-export default function index({ post, title }) {
+export default function Index({ post, title }) {
 
     const postDate = formatdate(post.modified);
     const rand = getRandom();
