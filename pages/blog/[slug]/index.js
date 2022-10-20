@@ -54,7 +54,7 @@ export async function getStaticPaths() {
 
     // Get the paths we want to pre-render based on posts
     const paths = posts.map((post) => ({
-        params: { id: post.id.toString() },
+        params: { slug: post.slug },
     }));
 
     // We'll pre-render only these paths at build time.
@@ -63,8 +63,8 @@ export async function getStaticPaths() {
 
 // This also gets called at build time
 export async function getStaticProps({ params }) {
-    const res = await axios.get(`${POSTS_API_URL}/${params.id}`);
-    const post = await res.data;
+    const res = await axios.get(`${POSTS_API_URL}?slug=${params.slug}`);
+    const post = await res.data[0];
     const image = await getFeaturedImage(post.featured_media);
     const author = await getAuthor(post.author);
     return {
