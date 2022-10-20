@@ -30,7 +30,7 @@ export default function Post({ post }) {
                     <h4 className="font-main font-bold text-md dark:text-white">{postDate}</h4>
                 </div>
                 <div>
-                    <Link href={`/blog/${post.id}`}>
+                    <Link href={`/blog/${post.slug}`}>
                         <h3 className="font-main font-bold text-2xl cursor-pointer relative mb-2 blog-hover dark:text-white">
                             <span className="z-10 relative">{post.title.rendered}</span>
                             <span className={`hover-underline absolute left-0 -bottom-0 w-full h-1 transition-all bg-theme-${rand}`}></span>
