@@ -1,4 +1,4 @@
-import Head from 'next/head'
+import HeadMeta from '../../../components/HeadMeta';
 import Link from 'next/link'
 
 import axios from 'axios';
@@ -17,9 +17,11 @@ export default function Index({ post, title, image, author }) {
 
     return (
         <div className="pt-20 container pb-10 m-auto">
-            <Head>
-                <title>{title} - Matt&apos;s Website</title>
-            </Head>
+            <HeadMeta seo={{
+                title: post.yoast_head_json.og_title,
+                desc: post.yoast_head_json.og_description,
+                schema: post.yoast_head_json.schema,
+            }}/>
             <div className="w-10/12 py-8 m-auto sm:w-8/12">
                 {image &&
                     <img 
@@ -66,6 +68,7 @@ export async function getStaticProps({ params }) {
     const post = await res.data[0];
     const image = await getFeaturedImage(post.featured_media);
     const author = await getAuthor(post.author);
+
     return {
         props: { 
             post, 

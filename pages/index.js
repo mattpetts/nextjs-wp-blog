@@ -1,5 +1,4 @@
-import Head from 'next/head'
-import Link from 'next/link'
+import HeadMeta from '../components/HeadMeta'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGithub, faLinkedin } from '@fortawesome/free-brands-svg-icons'
@@ -11,14 +10,9 @@ export default function Home() {
     return (
         <>
             <div className="flex flex-1 flex-col justify-center items-center min-h-screen">
-                <Head>
-                    <title>Matt&apos;s Website</title>
-
-                    <link rel="preconnect" href="https://fonts.googleapis.com" />
-                    <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin />
-                    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
-                </Head>
-
+                <HeadMeta seo={{
+                    'title': 'Matt\'s Website'
+                }}/>
                 <div className="w-10/12 py-8 m-auto sm:w-8/12">
                     <h1 className="w-100 text-center font-main font-bold text-6xl dark:text-white sm:text-left">Matt Petts</h1>
                     <p className="w-100 text-center font-main text-lg mb-3 dark:text-white sm:text-left">Software engineer and full-stack developer</p>
