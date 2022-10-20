@@ -867,7 +867,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 pre.wp-block-code {
   border-left: 6px solid #44318D;
   background-color: #F5F7F9;
-  padding: 20px 10px;
+  padding: 20px 10px 20px 30px;
+  margin-bottom: 15px;
+  color: #797979;
 }
 
 .dark .dark\:border-gray-800{
