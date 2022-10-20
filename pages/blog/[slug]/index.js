@@ -39,7 +39,7 @@ export default function Index({ post, title, image, author }) {
                     <h4 className="font-main font-bold text-md mr-5 dark:text-white w-6/12 sm:w-max">Last Updated: {postDate}</h4>
                     {author && <h4 className="font-main font-bold text-md dark:text-white w-6/12 sm:w-max">By: {author}</h4>}
                 </div>
-                <div className="blog-content-block dark:text-white">
+                <div className="blog-content-block dark:text-white dark:code-dark">
                     {parse(post.content.rendered)}
                 </div>
             </div>
