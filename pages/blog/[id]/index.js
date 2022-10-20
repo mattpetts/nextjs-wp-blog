@@ -9,21 +9,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import { useEffect, useState } from 'react';
 
-export default function Index({ post, title }) {
+export default function Index({ post, title, image, author }) {
 
     const postDate = formatdate(post.modified);
     const rand = getRandom();
-
-    const [postData, setPostData] = useState({});
-
-    useEffect(() => {
-        const getPostData = async () => {
-            const image = await getFeaturedImage(post.featured_media);
-            const author = await getAuthor(post.author);
-            setPostData({image, author})
-        }
-        getPostData();
-    }, [])
 
     return (
         <div className="pt-20 container pb-10 m-auto">
@@ -31,9 +20,9 @@ export default function Index({ post, title }) {
                 <title>{title}</title>
             </Head>
             <div className="w-10/12 py-8 m-auto sm:w-8/12">
-                {postData &&
+                {image &&
                     <img 
-                        src={postData.image} 
+                        src={image} 
                         alt={title} 
                         className="rounded-md block mx-auto mt-6 max-w-5xl w-full" 
                     />
@@ -45,7 +34,7 @@ export default function Index({ post, title }) {
                 </h1>  
                 <div className="flex flex-row align-center border-t border-b py-4 mb-5 dark:border-gray-800">
                     <h4 className="font-main font-bold text-md mr-5 dark:text-white w-6/12 sm:w-max">Last Updated: {postDate}</h4>
-                    <h4 className="font-main font-bold text-md dark:text-white w-6/12 sm:w-max">By: {postData.author}</h4>
+                    {author && <h4 className="font-main font-bold text-md dark:text-white w-6/12 sm:w-max">By: {author}</h4>}
                 </div>
                 <div
                     className="blog-content-block dark:text-white"
@@ -76,10 +65,14 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
     const res = await axios.get(`${POSTS_API_URL}/${params.id}`);
     const post = await res.data;
+    const image = await getFeaturedImage(post.featured_media);
+    const author = await getAuthor(post.author);
     return {
         props: { 
             post, 
-            title: post.title.rendered 
+            title: post.title.rendered,
+            image,
+            author
         },
         // Next.js will attempt to re-generate the page:
         // - When a request comes in
