@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import Head from 'next/head'
+import HeadMeta from '../../components/HeadMeta'
 import PostList from '../../components/PostList';
 import { getAllPosts, getFilteredPosts } from '../../lib/utils';
 
@@ -37,9 +37,9 @@ export default function Home() {
 
     return (
         <div className="pt-20 container min-h-screen m-auto">
-            <Head>
-                <title>Tech Blog</title>
-            </Head>
+            <HeadMeta seo={{
+                'title': 'Tech Blog - Matt\'s Website'
+            }}/>
             <div className="w-11/12 py-8 m-auto sm:w-9/12">
                 <h1 className="w-100 text-left font-main font-bold text-5xl text-left my-6 dark:text-white">Tech Blog</h1>
                 <form className="mb-8 w-full">

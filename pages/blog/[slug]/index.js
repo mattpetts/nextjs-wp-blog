@@ -1,4 +1,4 @@
-import Head from 'next/head'
+import HeadMeta from '../../../components/HeadMeta';
 import Link from 'next/link'
 
 import axios from 'axios';
@@ -13,12 +13,15 @@ export default function Index({ post, title, image, author }) {
 
     const postDate = formatdate(post.modified);
     const [rand, setRand] = useState(getRandom());
+    const parse = require('html-react-parser');
 
     return (
         <div className="pt-20 container pb-10 m-auto">
-            <Head>
-                <title>{title}</title>
-            </Head>
+            <HeadMeta seo={{
+                title: post.yoast_head_json.og_title,
+                desc: post.yoast_head_json.og_description,
+                schema: post.yoast_head_json.schema,
+            }}/>
             <div className="w-10/12 py-8 m-auto sm:w-8/12">
                 {image &&
                     <img 
@@ -36,10 +39,8 @@ export default function Index({ post, title, image, author }) {
                     <h4 className="font-main font-bold text-md mr-5 dark:text-white w-6/12 sm:w-max">Last Updated: {postDate}</h4>
                     {author && <h4 className="font-main font-bold text-md dark:text-white w-6/12 sm:w-max">By: {author}</h4>}
                 </div>
-                <div
-                    className="blog-content-block dark:text-white"
-                    dangerouslySetInnerHTML={{ __html: post.content.rendered }}
-                >
+                <div className="blog-content-block dark:text-white">
+                    {parse(post.content.rendered)}
                 </div>
             </div>
         </div>
@@ -67,6 +68,7 @@ export async function getStaticProps({ params }) {
     const post = await res.data[0];
     const image = await getFeaturedImage(post.featured_media);
     const author = await getAuthor(post.author);
+
     return {
         props: { 
             post, 
