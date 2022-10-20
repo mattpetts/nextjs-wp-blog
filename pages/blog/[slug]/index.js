@@ -13,11 +13,12 @@ export default function Index({ post, title, image, author }) {
 
     const postDate = formatdate(post.modified);
     const [rand, setRand] = useState(getRandom());
+    const parse = require('html-react-parser');
 
     return (
         <div className="pt-20 container pb-10 m-auto">
             <Head>
-                <title>{title}</title>
+                <title>{title} - Matt&apos;s Website</title>
             </Head>
             <div className="w-10/12 py-8 m-auto sm:w-8/12">
                 {image &&
@@ -36,10 +37,8 @@ export default function Index({ post, title, image, author }) {
                     <h4 className="font-main font-bold text-md mr-5 dark:text-white w-6/12 sm:w-max">Last Updated: {postDate}</h4>
                     {author && <h4 className="font-main font-bold text-md dark:text-white w-6/12 sm:w-max">By: {author}</h4>}
                 </div>
-                <div
-                    className="blog-content-block dark:text-white"
-                    dangerouslySetInnerHTML={{ __html: post.content.rendered }}
-                >
+                <div className="blog-content-block dark:text-white">
+                    {parse(post.content.rendered)}
                 </div>
             </div>
         </div>

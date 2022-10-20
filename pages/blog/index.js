@@ -38,7 +38,7 @@ export default function Home() {
     return (
         <div className="pt-20 container min-h-screen m-auto">
             <Head>
-                <title>Tech Blog</title>
+                <title>Tech Blog - Matt&apos;s Website</title>
             </Head>
             <div className="w-11/12 py-8 m-auto sm:w-9/12">
                 <h1 className="w-100 text-left font-main font-bold text-5xl text-left my-6 dark:text-white">Tech Blog</h1>
