@@ -77,6 +77,13 @@ export async function getStaticProps({ params }) {
     const res = await axios.get(`${POSTS_API_URL}/${params.id}`);
     const post = await res.data;
     return {
-        props: { post, title: post.title.rendered },
+        props: { 
+            post, 
+            title: post.title.rendered 
+        },
+        // Next.js will attempt to re-generate the page:
+        // - When a request comes in
+        // - At most once every 10 seconds
+        revalidate: 10
     };
 }
