@@ -6,6 +6,7 @@ import { getRandom, getAuthor, formatdate } from '../lib/utils'
 export default function Post({ post }) {
 
     const [postAuthor, setPostAuthor] = useState(null);
+    const [rand, setRand] = useState(getRandom());
 
     const returnAuthor = async () => {
         const author = await getAuthor(post.author);
@@ -20,7 +21,6 @@ export default function Post({ post }) {
     }, []);
 
     const postDate = formatdate(post.modified)
-    const rand = getRandom();
 
     return (
         <div className="w-full m-auto border-b border-gray-100 flex flex-row items-center justify-between py-4 px-2 dark:border-gray-800">

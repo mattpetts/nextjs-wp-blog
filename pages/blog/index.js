@@ -9,13 +9,18 @@ export default function Home() {
     const [posts, setPosts] = useState([]);
     const [filteredPosts, setFilteredPosts] = useState([]);
     const [searchTerm, updateSearchTerm] = useState(null);
+    const [mounted, isMounted] = useState(false);
 
     useEffect(() => {
+        if (true === mounted) {
+            return;
+        }
         const fetchPosts = async () => {
             const posts = await getAllPosts();
             setPosts(posts);
         }
         fetchPosts();
+        isMounted(true)
     }, []);
 
     useEffect(() => {

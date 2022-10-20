@@ -7,12 +7,12 @@ import { POSTS_API_URL } from '../../../lib/constants';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 export default function Index({ post, title, image, author }) {
 
     const postDate = formatdate(post.modified);
-    const rand = getRandom();
+    const [rand, setRand] = useState(getRandom());
 
     return (
         <div className="pt-20 container pb-10 m-auto">
