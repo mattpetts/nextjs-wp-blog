@@ -1,12 +1,27 @@
 import Link from 'next/link'
 import { useState, useEffect } from 'react';
-import { getRandom, getAuthor, formatdate } from '../lib/utils'
+import { getRandom, getAuthor, formatdate, getCategories, getTags } from '../lib/utils';
+import Tags from './Tags';
 
 
 export default function Post({ post }) {
 
     const [postAuthor, setPostAuthor] = useState(null);
+    const [postCats, setPostCats] = useState({parent: null, child: null});
     const [rand, setRand] = useState(getRandom());
+
+    // handle post categories
+    const returnCategories = () => {
+        post.categories.map(async (cat) => {
+            const category = await getCategories(cat);
+
+            if (category.parent === 0) {
+                setPostCats(prev => ({...prev, parent: category.name}));
+            } else {
+                setPostCats(prev => ({...prev, child: category.name}));
+            }
+        });
+    }
 
     const returnAuthor = async () => {
         const author = await getAuthor(post.author);
@@ -14,10 +29,8 @@ export default function Post({ post }) {
     }
 
     useEffect(() => {
-        let mounted = true;
-        if (mounted) {
-            returnAuthor();
-        }
+        returnAuthor();
+        returnCategories();
     }, []);
 
     const postDate = formatdate(post.modified)
@@ -36,7 +49,8 @@ export default function Post({ post }) {
                             <span className={`hover-underline absolute left-0 -bottom-0 w-full h-1 transition-all bg-theme-${rand}`}></span>
                         </h3>   
                     </Link>  
-                    {postAuthor && <h4 className="font-main text-sm dark:text-white">By: {postAuthor}</h4>}
+                    {postAuthor && <h4 className="font-main text-sm dark:text-white mr-2 mb-2 inline-block">By: {postAuthor}</h4>}
+                    <Tags tags={post.tags} />
                 </div>
             </div>
         </div>
