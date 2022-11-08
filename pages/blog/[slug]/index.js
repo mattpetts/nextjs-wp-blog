@@ -1,5 +1,6 @@
 import HeadMeta from '../../../components/HeadMeta';
 import Link from 'next/link'
+import Tags from '../../../components/Tags';
 
 import axios from 'axios';
 import { getAuthor, getFeaturedImage, getRandom, formatdate } from '../../../lib/utils';
@@ -31,13 +32,16 @@ export default function Index({ post, title, image, author }) {
                     />
                 }
                 <h5 className='mt-5 font-main text-md dark:text-white cursor-pointer'><Link href="/blog"><span className='font-bold'><FontAwesomeIcon icon={ faChevronLeft } /> Tech Blog</span></Link></h5>
-                <h1 className="inline-block text-left font-main font-bold text-5xl text-left my-6 relative blog-hover text-white">
+                <h1 className="inline-block text-left font-main font-bold text-5xl text-left my-3 relative blog-hover text-white">
                     <span className='z-10 relative'>{title}</span>
                     <span className={`hover-underline absolute left-0 -bottom-0 w-full h-full transition-all bg-theme-${rand}`}></span>
                 </h1>  
+                <div className='mb-3'>
+                    <Tags tags={post.tags} />
+                </div>
                 <div className="flex flex-row align-center border-t border-b py-4 mb-5 dark:border-gray-800">
                     <h4 className="font-main font-bold text-md mr-5 dark:text-white w-6/12 sm:w-max">Last Updated: {postDate}</h4>
-                    {author && <h4 className="font-main font-bold text-md dark:text-white w-6/12 sm:w-max">By: {author}</h4>}
+                    {author && <h4 className="font-main font-bold text-md dark:text-white w-6/12 sm:w-max mr-2">By: {author}</h4>}
                 </div>
                 <div className="blog-content-block dark:text-white dark:code-dark">
                     {parse(post.content.rendered)}
