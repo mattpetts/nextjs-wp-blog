@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react'
-import { getTags, getRandom } from '../lib/utils'
+import { getTags } from '../lib/utils'
+import Tag from './Tag';
 
 const Tags = ({ tags }) => {
 
     const [postTags, setPostTags] = useState([]);
+    const [isLoading, setIsloading] = useState(true);
 
     const returnTags = () => {
         tags.map(async (t) => {
             const tag = await getTags(t);
-            setPostTags(postTags => [...postTags, tag.name])     
+            setPostTags(postTags => [...postTags, tag.name]);
         });
     }
 
@@ -16,10 +18,16 @@ const Tags = ({ tags }) => {
         returnTags();
     }, []);
 
+    useEffect(() => {
+        if (postTags.length === tags.length) {
+            setIsloading(false);
+        }
+    }, [postTags]);
+
     return (
         <div className='d-flex'>
-            {postTags.map((tag) => (
-                <span key={tag} className={`rounded font-main font-light text-white text-sm px-4 py-1 mr-2 mb-2 bg-theme-${getRandom()}`}>{tag}</span>
+            {!isLoading && postTags.map((tag) => (
+                <Tag key={tag} tag={tag} />
             ))}
         </div>
     )
