@@ -833,11 +833,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   transition-duration: 1000ms;
 }
 
-.blog-hover:hover {
-  color: #FFFFFF!important;
-  transition: all .2s ease;
-}
-
 .blog-hover:hover .hover-underline {
   height:100%;
   transition: all .2s ease;
@@ -884,6 +879,16 @@ pre.wp-block-code {
   color: #A4B3B6;
 }
 
+.hover\:text-white:hover{
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.hover\:text-black:hover{
+  --tw-text-opacity: 1;
+  color: rgb(0 0 0 / var(--tw-text-opacity));
+}
+
 .dark .dark\:border-gray-800{
   --tw-border-opacity: 1;
   border-color: rgb(31 41 55 / var(--tw-border-opacity));
@@ -926,5 +931,10 @@ pre.wp-block-code {
 @media (min-width: 768px){
   .md\:block{
     display: block;
+  }
+
+  .md\:hover\:text-white:hover{
+    --tw-text-opacity: 1;
+    color: rgb(255 255 255 / var(--tw-text-opacity));
   }
 }

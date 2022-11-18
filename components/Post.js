@@ -57,9 +57,9 @@ export default function Post({ post }) {
                         </div>
                         <div>
                             <Link href={`/blog/${post.slug}`}>
-                                <h3 className="font-main font-bold text-2xl cursor-pointer relative mb-2 blog-hover dark:text-white">
+                                <h3 className="font-main font-bold text-2xl cursor-pointer relative mb-2 blog-hover dark:text-white hover:text-black md:hover:text-white transition-all">
                                     <span className="z-10 relative">{post.title.rendered}</span>
-                                    <span className={`hover-underline absolute left-0 -bottom-0 w-full h-1 transition-all bg-theme-${rand}`}></span>
+                                    <span className={`hover-underline absolute left-0 -bottom-0 w-full h-1 transition-all hidden bg-theme-${rand} md:block`}></span>
                                 </h3>   
                             </Link>  
                             {postAuthor && <h4 className="font-main text-sm dark:text-white mr-2 mb-2 inline-block">By: {postAuthor}</h4>}
@@ -68,14 +68,14 @@ export default function Post({ post }) {
                 </div>
                 :
                 <div className="w-full m-auto border-b border-gray-100 flex flex-row items-center justify-between py-4 px-2 dark:border-gray-800">
-                    <Box sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center' }}>
-                        <Box sx={{ mr: 2, mt: 2}}>
-                            <Skeleton variant="rectangular" animation="wave" height={10} width={100} sx={{ mb: 1,  borderRadius: 2, }} />
-                            <Skeleton variant="rectangular" animation="wave" height={20} width={100} sx={{ mb: 1,  borderRadius: 2, }} />
+                    <Box sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', width: '100%' }}>
+                        <Box sx={{ mr: 2, mt: 2, width: '10%'}}>
+                            <Skeleton variant="rectangular" animation="wave" height={10} sx={{ mb: 1,  borderRadius: 2, width: '100%' }} />
+                            <Skeleton variant="rectangular" animation="wave" height={20} sx={{ mb: 1,  borderRadius: 2, width: '100%' }} />
                         </Box>
-                        <Box sx={{ width: '100%'}}>
-                            <Skeleton variant="rectangular" animation="wave" height={35} sx={{ mb: 1.2,  borderRadius: 2, }} />
-                            <Skeleton variant="rectangular" animation="wave" height={18} width={300} sx={{ mb: 1,  borderRadius: 2, }} />
+                        <Box sx={{ width: '90%'}}>
+                            <Skeleton variant="rectangular" animation="wave" height={35} sx={{ mb: 1.2,  borderRadius: 2, width: '100%' }} />
+                            <Skeleton variant="rectangular" animation="wave" height={18} sx={{ mb: 1,  borderRadius: 2, width: '100%' }} />
                         </Box>
                     </Box>
                 </div>

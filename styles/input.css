@@ -3,10 +3,6 @@
 @tailwind components;
 @tailwind utilities; 
 
-.blog-hover:hover {
-    color: #FFFFFF!important;
-    transition: all .2s ease;
-}
 .blog-hover:hover .hover-underline {
     height:100%;
     transition: all .2s ease;
