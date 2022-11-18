@@ -24,16 +24,29 @@ export default function Home() {
     }, []);
 
     useEffect(() => {
-        if (null === searchTerm || 0 === searchTerm.length) {
-            setFilteredPosts([]);
-            return;
+
+        let timer = setTimeout(() => {
+            if (null === searchTerm || 0 === searchTerm.length) {
+                setFilteredPosts([]);
+                return;
+            }
+
+            const fetchPosts = async () => {
+                const posts = await getFilteredPosts(searchTerm);
+                setFilteredPosts(posts);
+            }
+
+            fetchPosts();
+        }, 300);
+
+        return () => {
+            clearTimeout(timer)
         }
-        const fetchPosts = async () => {
-            const posts = await getFilteredPosts(searchTerm);
-            setFilteredPosts(posts);
-        }
-        fetchPosts();
-    }, [searchTerm])
+    }, [searchTerm]);
+
+    const handleSearchInput = (event) => {
+        updateSearchTerm(event.target.value);
+    }
 
     return (
         <div className="pt-20 container min-h-screen m-auto">
@@ -48,10 +61,10 @@ export default function Home() {
                         name="search" 
                         placeholder="Search Blog" 
                         className="w-full p-4 border rounded font-main text-lg outline-none dark:bg-gray-900 dark:border-gray-800 dark:text-white"
-                        onChange={(e) => updateSearchTerm(e.target.value)}
+                        onChange={handleSearchInput}
                     />
                 </form>
-                <PostList posts={searchTerm ? filteredPosts : posts} />
+                <PostList posts={filteredPosts.length > 0 ? filteredPosts : posts} />
             </div>
         </div>
     )
